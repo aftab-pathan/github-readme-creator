@@ -16,9 +16,10 @@ import {
 } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { useEffect, useState } from "react";
+
+import useLocalStorage from "../hooks/useLocalStorage";
 import { SortableItem } from "./SortableItem";
 import { CustomSection } from "./CustomSection";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 const keybabCaseToTitleCase = (str) => {
   return str

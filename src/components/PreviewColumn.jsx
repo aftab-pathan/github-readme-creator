@@ -27,7 +27,7 @@ export const PreviewColumn = ({
         showPreview ? "overflow-y-scroll" : "overflow-hidden"
       }`}
     >
-      {showPreview ? (
+      {/* {showPreview ? (
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           children={markdown}
@@ -41,7 +41,7 @@ export const PreviewColumn = ({
         />
       ) : (
         <RawPreview text={markdown} />
-      )}
+      )} */}
     </div>
   );
 };
