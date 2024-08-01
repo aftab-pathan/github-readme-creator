@@ -46,7 +46,7 @@ function Home() {
                     </span>
                   </h1>
                   <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-                    {`Our simple editor allows you to quickly add and customize all the sections you need for your project's readme`}
+                    {`Spend less time formatting and more time on content. Our editor simplifies creating the perfect readme for your project`}
                   </p>
                 </div>
                 <div className="flex justify-center mt-6">
