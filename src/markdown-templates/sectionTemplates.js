@@ -215,7 +215,7 @@ export const sectionTemplates = [
     markdown: `
   ## Authors and Acknowledgement
   
-  - [@kuluruvineeth](https://www.github.com/kuluruvineeth) for development and design.
+  - [@aftab-pathan](https://www.github.com/aftab-pathan) for development and design.
   
     `,
   },
@@ -372,7 +372,7 @@ export const sectionTemplates = [
     slug: "github-profile-intro",
     name: "Github Profile - Introduction",
     markdown: `
-  # Hi, I'm Kuluru Vineeth! 👋
+  # Hi, I'm Aftab Pathan! 👋
     `,
   },
   {
@@ -396,9 +396,9 @@ export const sectionTemplates = [
     name: "Github Profile - Links",
     markdown: `
   ## 🔗 Links
-  [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://www.kuluruvineeth.com/)
-  [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kuluruvineeth)
-  [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/kuluruvineeth)
+  [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)]()
+  [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aftabpathan313)
+  [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/aftabksb)
     `,
   },
   {
