@@ -112,10 +112,10 @@ function Home() {
               Made with love &#9825; by{" "}
               <a
                 className="hover:text-green-500"
-                href="https://www.kuluruvineeth.com"
+                href="https://github.com/aftab-pathan"
                 target="__blank"
               >
-                Kuluru Vineeth
+                Aftab Pathan
               </a>
             </h2>
           </div>
