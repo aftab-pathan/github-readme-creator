@@ -7,12 +7,13 @@ import EditorPreviewContainer from "../components/EditorPreviewContainer";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 function ReadmeEditor() {
-  const [markdown, setMarkdown] = useState("");
   const [selectedSectionSlugs, setSelectedSectionSlugs] = useState([]);
   const [sectionSlugs, setSectionSlugs] = useState(
     sectionTemplates.map((t) => t.slug),
   );
-  const [focusedSectionSlug, setFocusedSectionSlug] = useState(null);
+  const [focusedSectionSlug, setFocusedSectionSlug] = useState(
+    "title-and-description",
+  );
   const [showModal, setShowModal] = useState(false);
   const [templates, setTemplates] = useState(sectionTemplates);
   const [showDrawer, toggleDrawer] = useState(false);
@@ -28,30 +29,9 @@ function ReadmeEditor() {
     return templates.find((t) => t.slug === slug);
   };
 
-  useEffect(() => {
-    setFocusedSectionSlug(null);
-  }, []);
-
-  useEffect(() => {
-    let currentSlugList = localStorage.getItem("current-slug-list");
-    if (
-      currentSlugList.indexOf("title-and-description") == -1 &&
-      selectedSectionSlugs.indexOf("title-and-description") > -1
-    ) {
-      selectedSectionSlugs.splice(
-        selectedSectionSlugs.indexOf("title-and-description"),
-        1,
-      );
-    }
-    setFocusedSectionSlug(
-      localStorage.getItem("current-slug-list").split(",")[0],
-    );
-    localStorage.setItem("current-slug-list", selectedSectionSlugs);
-  }, [selectedSectionSlugs]);
   const drawerClass = showDrawer ? "" : "-translate-x-full md:transform-none";
   return (
     <div className="w-full h-full">
-      {/* <Head></Head> */}
       <Nav
         selectedSectionSlugs={selectedSectionSlugs}
         setShowModal={setShowModal}
@@ -72,7 +52,7 @@ function ReadmeEditor() {
             setFocusedSectionSlug={setFocusedSectionSlug}
             focusesSectionSlug={focusedSectionSlug}
             templates={templates}
-            // originalTemplate={sectionTemplate}
+            originalTemplate={sectionTemplates}
             setTemplates={setTemplates}
             getTemplate={getTemplate}
           />
@@ -82,9 +62,7 @@ function ReadmeEditor() {
           setTemplates={setTemplates}
           getTemplate={getTemplate}
           focusedSectionSlug={focusedSectionSlug}
-          setFocusedSectionSlug={setFocusedSectionSlug}
           selectedSectionSlugs={selectedSectionSlugs}
-          setSelectedSectionSlugs={setSelectedSectionSlugs}
         />
       </div>
     </div>

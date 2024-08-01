@@ -12,7 +12,6 @@ const EditorPreviewContainer = ({
   getTemplate,
   focusedSectionSlug,
   selectedSectionSlugs,
-  setSelectedSectionSlugs,
 }) => {
   const [toggleState, setToggleState] = useState({
     theme: "vs-dark",
@@ -71,7 +70,6 @@ const EditorPreviewContainer = ({
           <EditorColumn
             focusedSectionSlug={focusedSectionSlug}
             selectedSectionSlugs={selectedSectionSlugs}
-            setSelectedSectionSlugs={setSelectedSectionSlugs}
             templates={templates}
             setTemplates={setTemplates}
             theme={toggleState.theme}

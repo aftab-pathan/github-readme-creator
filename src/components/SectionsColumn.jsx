@@ -15,7 +15,7 @@ import {
   SortableContext,
 } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import useLocalStorage from "../hooks/useLocalStorage";
 import { SortableItem } from "./SortableItem";
@@ -51,54 +51,43 @@ export const SectionsColumn = ({
     }),
   );
 
-  const [pageRefreshed, setPageRefreshed] = useState(false);
-  const [addAction, setAddAction] = useState(false);
-  const [currentSlugList, setCurrentSlugList] = useState([]);
-  const [slugsFromPreviousSession, setSlugsFromPreviousSession] = useState([]);
   const { saveBackup, deleteBackup } = useLocalStorage();
 
   let alphabetizedSectionSlugs = sectionSlugs.sort();
 
   useEffect(() => {
-    var slugsFromPreviousSession =
-      localStorage.getItem("current-slug-list") == null
-        ? "title-and-description"
-        : localStorage.getItem("current-slug-list");
-    setSlugsFromPreviousSession(slugsFromPreviousSession);
-    if (slugsFromPreviousSession.length > 0) {
-      setPageRefreshed(true);
-
-      let slugsList = [];
-
-      var hasMultipleSlugsFromPreviousSession =
-        slugsFromPreviousSession.indexOf(",") > -1;
-      hasMultipleSlugsFromPreviousSession
-        ? (slugsList = slugsFromPreviousSession.split(","))
-        : slugsList.forEach(function (entry) {
-            setSectionSlugs((prev) => prev.filter((s) => s != entry));
-          });
-      setCurrentSlugList(slugsList);
-      setSelectedSectionSlugs(slugsList);
-      setFocusedSectionSlug(currentSlugList[0]);
-      localStorage.setItem("current-focused-slug", slugsList[0]);
+    let slugsList = ["title-and-description"];
+    if (localStorage.getItem("current-slug-list")) {
+      const slugsFromPreviousSession =
+        localStorage.getItem("current-slug-list");
+      console.log(slugsFromPreviousSession);
+      slugsList = slugsFromPreviousSession.split(",");
     }
+
+    slugsList.forEach(function (entry) {
+      setSectionSlugs((prev) => prev.filter((s) => s != entry));
+    });
+    setSelectedSectionSlugs(slugsList);
+    setFocusedSectionSlug(slugsList[0]);
+    localStorage.setItem("current-slug-list", slugsList);
+    localStorage.setItem("current-focused-slug", slugsList[0]);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("current-slug-list", selectedSectionSlugs);
+    if (selectedSectionSlugs.length > 0) {
+      localStorage.setItem("current-slug-list", selectedSectionSlugs);
+    }
   }, [selectedSectionSlugs]);
 
   useEffect(() => {
-    setFocusedSectionSlug(localStorage.getItem("current-focused-slug"));
+    localStorage.setItem("current-focused-slug", focusesSectionSlug);
   }, [focusesSectionSlug]);
 
   const onAddSection = (e, section) => {
     localStorage.setItem("current-focused-slug", section);
-    setPageRefreshed(false);
-    setAddAction(true);
     setSectionSlugs((prev) => prev.filter((s) => s !== section));
     setSelectedSectionSlugs((prev) => [...prev, section]);
-    setFocusedSectionSlug(localStorage.getItem("current-focused-slug"));
+    setFocusedSectionSlug(section);
   };
 
   const handleDragEnd = (event) => {
@@ -200,27 +189,22 @@ export const SectionsColumn = ({
             modifiers={[restrictToVerticalAxis]}
           >
             <SortableContext items={selectedSectionSlugs}>
-              {
-                (pageRefreshed || addAction
-                  ? (selectedSectionSlugs = [...new Set(selectedSectionSlugs)])
-                  : "",
-                selectedSectionSlugs.map((s) => {
-                  const template = getTemplate(s);
-                  if (template) {
-                    return (
-                      <SortableItem
-                        key={s}
-                        id={s}
-                        section={template}
-                        focusesSectionSlug={focusesSectionSlug}
-                        setFocusedSectionSlug={setFocusedSectionSlug}
-                        onDeleteSection={onDeleteSection}
-                        onResetSection={onResetSection}
-                      />
-                    );
-                  }
-                }))
-              }
+              {selectedSectionSlugs.map((s) => {
+                const template = getTemplate(s);
+                if (template) {
+                  return (
+                    <SortableItem
+                      key={s}
+                      id={s}
+                      section={template}
+                      focusesSectionSlug={focusesSectionSlug}
+                      setFocusedSectionSlug={setFocusedSectionSlug}
+                      onDeleteSection={onDeleteSection}
+                      onResetSection={onResetSection}
+                    />
+                  );
+                }
+              })}
             </SortableContext>
           </DndContext>
         </ul>
@@ -232,33 +216,25 @@ export const SectionsColumn = ({
         <CustomSection
           setSelectedSectionSlugs={setSelectedSectionSlugs}
           setFocusedSectionSlug={setFocusedSectionSlug}
-          setPageRefreshed={setPageRefreshed}
-          setAddAction={setAddAction}
           setTemplates={setTemplates}
         />
         <ul className="space-y-3 mb-12">
-          {
-            (pageRefreshed &&
-            slugsFromPreviousSession.indexOf("title-and-description") == -1
-              ? sectionSlugs.push("title-and-description")
-              : "",
-            alphabetizedSectionSlugs.map((s) => {
-              const template = getTemplate(s);
-              if (template) {
-                return (
-                  <li key={s}>
-                    <button
-                      className="flex items-center block w-full h-full py-2 pl-3 pr-6 bg-white rounded-md shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"
-                      type="button"
-                      onClick={(e) => onAddSection(e, s)}
-                    >
-                      <span>{template.name}</span>
-                    </button>
-                  </li>
-                );
-              }
-            }))
-          }
+          {alphabetizedSectionSlugs.map((s) => {
+            const template = getTemplate(s);
+            if (template) {
+              return (
+                <li key={s}>
+                  <button
+                    className="flex items-center block w-full h-full py-2 pl-3 pr-6 bg-white rounded-md shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"
+                    type="button"
+                    onClick={(e) => onAddSection(e, s)}
+                  >
+                    <span>{template.name}</span>
+                  </button>
+                </li>
+              );
+            }
+          })}
         </ul>
       </div>
     </div>

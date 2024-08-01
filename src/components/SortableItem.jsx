@@ -11,7 +11,7 @@ export function SortableItem(props) {
   };
 
   const onClickSection = () => {
-    localStorage.setItem("current-focused-ring", props.id);
+    localStorage.setItem("current-focused-slug", props.id);
     props.setFocusedSectionSlug(props.id);
   };
 

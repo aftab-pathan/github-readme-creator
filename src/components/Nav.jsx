@@ -1,7 +1,6 @@
 import useDeviceDetect from "../hooks/useDeviceDetect";
 
 import { Link } from "react-router-dom";
-import Close from "./icons/Close";
 
 export const Nav = ({
   selectedSectionSlugs,
@@ -42,17 +41,6 @@ export const Nav = ({
         </div>
       </Link>
       <div className="flex flex-row-reverse md:flex-row">
-        <button
-          className="focus:outline-none focus:ring-2 focus:ring-green-400"
-          onClick={onMenuClick}
-        >
-          {/* {isDrawerOpen ? (
-            <Close className="w-10 h-10 md:hidden fill-current text-green-500" />
-          ) : (
-            <Menu className="w-10 h-10 md:hidden fill-current text-green-500" />
-          )} */}
-          close/menu
-        </button>
         <button
           type="button"
           className="flex flex-row relative items-center mr-4 md:mr-0 px-4 py-2 text-sm font-bold tracking-wide text-white border border-transparent rounded-md shadow-sm bg-green-500 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-green-500"

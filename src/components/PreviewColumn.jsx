@@ -1,8 +1,7 @@
-import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import RawPreview from "./RawPreview";
-import { Link } from "react-router-dom";
 import { TAB } from "../constant";
+import Markdown from "react-markdown";
 
 export const PreviewColumn = ({
   selectedSectionSlugs,
@@ -10,6 +9,7 @@ export const PreviewColumn = ({
   selectedTab,
 }) => {
   selectedSectionSlugs = [...new Set(selectedSectionSlugs)];
+
   const markdown = selectedSectionSlugs.reduce((acc, section) => {
     const template = getTemplate(section);
     if (template) {
@@ -18,7 +18,6 @@ export const PreviewColumn = ({
       return acc;
     }
   }, ``);
-
   const showPreview = selectedTab == TAB.PREVIEW;
 
   return (
@@ -27,21 +26,11 @@ export const PreviewColumn = ({
         showPreview ? "overflow-y-scroll" : "overflow-hidden"
       }`}
     >
-      {/* {showPreview ? (
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          children={markdown}
-          renderers={{
-            link: (props) => (
-              <Link to={props.href} target="__blank">
-                {props.children}
-              </Link>
-            ),
-          }}
-        />
+      {showPreview ? (
+        <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
       ) : (
         <RawPreview text={markdown} />
-      )} */}
+      )}
     </div>
   );
 };

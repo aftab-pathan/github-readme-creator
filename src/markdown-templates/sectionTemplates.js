@@ -1,6 +1,6 @@
 export const sectionTemplates = [
   {
-    slug: "title_and_description",
+    slug: "title-and-description",
     name: "Title and Description",
     markdown: `
   # Project Title
